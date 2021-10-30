@@ -3,11 +3,16 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"strconv"
+	"time"
 )
 
 func main() {
+	// seed rand with current time and pid
+	rand.Seed(int64(os.Getpid() ^ time.Now().Nanosecond()))
+
 	// read command line arguments
 	args := os.Args
 	if len(args) != 3 {
@@ -83,7 +88,7 @@ func appendRandomBytesToFile(filename string, numBytes int) error {
 	// make random bytes
 	buffer := make([]byte, numBytes)
 	for i := 0; i < numBytes; i++ {
-		buffer[i] = byte(i % 256)
+		buffer[i] = byte(rand.Intn(256))
 	}
 
 	// write random bytes to file
