@@ -37,7 +37,7 @@ func main() {
 }
 
 func printUsageAndExit() {
-	fmt.Println("Usage: appendBytesToFiles <filename/folder> <number of bytes>")
+	fmt.Println("Usage: appendRandomBytesToFiles <filename/folder> <number of bytes>")
 	os.Exit(1)
 }
 
