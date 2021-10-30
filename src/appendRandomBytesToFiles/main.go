@@ -62,15 +62,20 @@ func appendRandomBytesToFilesInFolderRecursive(folder string, numBytes int) erro
 
 	// iterate over entries
 	for _, entry := range entries {
-		// skip non-files
-		if !entry.Mode().IsRegular() {
-			continue
-		}
-
-		// append random bytes to file
-		err = appendRandomBytesToFile(entry.Name(), numBytes)
-		if err != nil {
-			return err
+		if entry.IsDir() {
+			// traverse subfolders
+			err := appendRandomBytesToFilesInFolderRecursive(folder+"/"+entry.Name(), numBytes)
+			if err != nil {
+				return err
+			}
+		} else if entry.Mode().IsRegular() {
+			// append random bytes to file
+			err := appendRandomBytesToFile(folder+"/"+entry.Name(), numBytes)
+			if err != nil {
+				return err
+			}
+		} else {
+			// ignore other entries
 		}
 	}
 
